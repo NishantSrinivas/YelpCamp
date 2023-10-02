@@ -5,14 +5,14 @@ const Camp = require("./models/camps");
 const methodOverride = require('method-override');
 const mongoose = require("mongoose");
 
-mongoose.connect('mongodb://127.0.0.1:27017/yelpcamp')
-    .then(() => {
-        console.log("CONNECTION WITH DATABASE DONE!");
-    })
-    .catch(err => {
-        console.log("FAILED CONNECTION WITH DATABASE");
-        console.log(err);
-    });
+mongoose.connect('mongodb://127.0.0.1:27017/yelpcamp');
+// .then(() => {
+//     console.log("CONNECTION WITH DATABASE DONE!");
+// })
+// .catch(err => {
+//     console.log("FAILED CONNECTION WITH DATABASE");
+//     console.log(err);
+// });
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
@@ -42,20 +42,33 @@ app.get("/allcamps", async (req, res) => {
     res.render("all", { allcamps });
 });
 
-app.post("/camp/newcamp", async (req, res) => {
-    quer = req.query;
-    // _price = parseInt(quer.price,10)
-
+app.post("/camp/add", async (req, res) => {
     const camp = Camp({
-        "price": quer.price,
-        "title": quer.title,
-        "location": quer.location,
-        "description": quer.description
+        "price": req.body.price,
+        "title": req.body.title,
+        "location": req.body.location,
+        "description": req.body.description
     });
 
-    const result = await camp.save();
-    res.send(result);
+    await camp.save();
+    res.redirect("/allcamps");
 });
+
+app.post("/camp/newcamp", (req, res) => {
+    res.render("new");
+});
+
+app.delete("/camp/:id", async (req, res) => {
+    await Camp.findByIdAndDelete(req.params.id);
+    const allcamps = await Camp.find({});
+    res.redirect("/allcamps");
+});
+
+app.delete("/allcamps", async (req, res) => {
+    await Camp.deleteMany({});
+    res.redirect("/");
+});
+
 
 app.listen(8000, () => {
     console.log("Yelp camp activated on port 8000");

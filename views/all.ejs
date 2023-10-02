@@ -15,10 +15,18 @@
                 <a href="/camp/<%=camp.id %>">
                     <%= camp.title %>
                 </a>
-
+                <form action="/camp/<%= camp.id %>?_method=DELETE" method="POST">
+                    <Button>delete camp</Button>
+                </form>
             </li>
             <% } %>
     </ul>
+    <form action="/allcamps?_method=DELETE" method="POST">
+        <Button>DELETE ALL</Button>
+    </form>
+    <form action="/camp/newcamp" method="POST">
+        <Button>ADD NEW CAMP</Button>
+    </form>
 </body>
 
 </html>
