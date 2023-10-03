@@ -6,13 +6,6 @@ const methodOverride = require('method-override');
 const mongoose = require("mongoose");
 
 mongoose.connect('mongodb://127.0.0.1:27017/yelpcamp');
-// .then(() => {
-//     console.log("CONNECTION WITH DATABASE DONE!");
-// })
-// .catch(err => {
-//     console.log("FAILED CONNECTION WITH DATABASE");
-//     console.log(err);
-// });
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
