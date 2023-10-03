@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>All Camps</title>
 </head>
 
 <body>
@@ -15,9 +15,8 @@
                 <a href="/camp/<%=camp.id %>">
                     <%= camp.title %>
                 </a>
-                <form action="/camp/<%= camp.id %>?_method=DELETE" method="POST">
-                    <Button>delete camp</Button>
-                </form>
+                -
+                $<%= camp.price %>.00
             </li>
             <% } %>
     </ul>

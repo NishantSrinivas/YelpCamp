@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>
+        <%= camp_with_id.title%>
+    </title>
 </head>
 
 <body>
@@ -15,6 +17,12 @@
         <h2>
             <%= camp_with_id.location %>
         </h2>
+        <form action="/camp/<%= camp_with_id.id %>?_method=DELETE" method="POST">
+            <Button>delete camp</Button>
+        </form>
+        <form action="/camp/<%= camp_with_id.id %>?_method=PATCH" method="POST">
+            <Button>edit camp</Button>
+        </form>
     </h1>
 </body>
 

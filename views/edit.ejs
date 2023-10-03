@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Camp</title>
+</head>
+
+<body>
+    <h1>Update Camp <%= camp_with_id.title %>
+    </h1>
+    <form action="/camp/updateprice/<%= camp_with_id.id %>?_method=PATCH" id="updatecampprice" method="POST">
+        <label for="price">Price: </label>
+        <input type="text" id="price" name="price">
+        <Button>update price</Button>
+    </form>
+</body>
+
+</html>

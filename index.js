@@ -60,7 +60,6 @@ app.post("/camp/newcamp", (req, res) => {
 
 app.delete("/camp/:id", async (req, res) => {
     await Camp.findByIdAndDelete(req.params.id);
-    const allcamps = await Camp.find({});
     res.redirect("/allcamps");
 });
 
@@ -69,6 +68,15 @@ app.delete("/allcamps", async (req, res) => {
     res.redirect("/");
 });
 
+app.patch("/camp/:id", async (req, res) => {
+    const camp_with_id = await Camp.findById(req.params.id);
+    res.render("edit", { camp_with_id });
+});
+
+app.patch("/camp/updateprice/:id", async (req, res) => {
+    await Camp.findByIdAndUpdate(req.params.id, { "price": req.body.price });
+    res.redirect("/allcamps");
+});
 
 app.listen(8000, () => {
     console.log("Yelp camp activated on port 8000");
