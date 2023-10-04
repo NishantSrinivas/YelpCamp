@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Camps</title>
-</head>
-
-<body>
+<% layout("./template/boilerplate") %>
     <h1>All Camps</h1>
     <ul>
         <% for (let camp of allcamps) {%>
@@ -26,6 +17,3 @@
     <form action="/camp/newcamp" method="POST">
         <Button>ADD NEW CAMP</Button>
     </form>
-</body>
-
-</html>

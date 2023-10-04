@@ -4,6 +4,7 @@ const path = require("path");
 const Camp = require("./models/camps");
 const methodOverride = require('method-override');
 const mongoose = require("mongoose");
+const ejsMate = require("ejs-mate");
 
 mongoose.connect('mongodb://127.0.0.1:27017/yelpcamp');
 
@@ -13,6 +14,7 @@ db.once("open", () => {
     console.log("Connected to Yelp Database");
 });
 
+app.engine("ejs", ejsMate);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride("_method"));
@@ -69,6 +71,10 @@ app.patch("/camp/:id", async (req, res) => {
 app.patch("/camp/updateprice/:id", async (req, res) => {
     await Camp.findByIdAndUpdate(req.params.id, { "price": req.body.price });
     res.redirect("/allcamps");
+});
+
+app.use((req, res) => {
+    res.status(404).render("notfound");
 });
 
 app.listen(8000, () => {
