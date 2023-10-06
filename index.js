@@ -25,6 +25,10 @@ app.get("/", (req, res) => {
     res.render("home");
 });
 
+app.get("/camp/newcamp", (req, res) => {
+    res.render("new");
+});
+
 app.get("/camp/:id", async (req, res) => {
     const campId = req.params.id;
 
@@ -47,10 +51,6 @@ app.post("/camp/add", async (req, res) => {
 
     await camp.save();
     res.redirect("/allcamps");
-});
-
-app.post("/camp/newcamp", (req, res) => {
-    res.render("new");
 });
 
 app.delete("/camp/:id", async (req, res) => {
