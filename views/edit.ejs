@@ -1,8 +1,19 @@
 <% layout("./template/boilerplate") %>
-    <h1>Update Camp <%= camp_with_id.title %>
-    </h1>
-    <form action="/camp/updateprice/<%= camp_with_id.id %>?_method=PATCH" id="updatecampprice" method="POST">
-        <label for="price">Price: </label>
-        <input type="text" id="price" name="price">
-        <Button>update price</Button>
-    </form>
+    <div class="row">
+        <h1 class="text-center">Update Camp <%= camp_with_id.title %>
+        </h1>
+        <div class="col-6 offset-3">
+            <form action="/camp/updateprice/<%= camp_with_id.id %>?_method=PATCH" id="updatecampprice" method="POST">
+                <div class="mb-3">
+                    <label class="form-label" for="price">Price: </label>
+                    <input class="form-control" type="text" id="price" name="price">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="image">Image url: </label>
+                    <input class="form-control" type="text" id="image" name="image">
+                </div>
+                <Button class="btn btn-warning">Update</Button>
+            </form>
+            <a href="/camp/<%= camp_with_id.id%>">Back</a>
+        </div>
+    </div>

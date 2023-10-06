@@ -8,9 +8,9 @@
         </h2>
         <img src="<%= camp_with_id.image %>" alt="camp image" width="640" width="640">
         <form action="/camp/<%= camp_with_id.id %>?_method=DELETE" method="POST">
-            <Button>delete camp</Button>
+            <Button class="btn btn-danger">delete camp</Button>
         </form>
         <form action="/camp/<%= camp_with_id.id %>?_method=PATCH" method="POST">
-            <Button>edit camp</Button>
+            <Button class="btn btn-warning">edit camp</Button>
         </form>
     </h1>

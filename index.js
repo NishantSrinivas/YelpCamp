@@ -46,7 +46,8 @@ app.post("/camp/add", async (req, res) => {
         "price": req.body.price,
         "title": req.body.title,
         "location": req.body.location,
-        "description": req.body.description
+        "description": req.body.description,
+        "image": req.body.image
     });
 
     await camp.save();
@@ -69,7 +70,7 @@ app.patch("/camp/:id", async (req, res) => {
 });
 
 app.patch("/camp/updateprice/:id", async (req, res) => {
-    await Camp.findByIdAndUpdate(req.params.id, { "price": req.body.price });
+    await Camp.findByIdAndUpdate(req.params.id, { "price": req.body.price, "image": req.body.image });
     res.redirect("/allcamps");
 });
 

@@ -1,17 +1,27 @@
 <% layout("./template/boilerplate") %>
-    <h1>Add a new camp!</h1>
-    <form action="/camp/add" id="newcamp" method="POST">
-        <label for="title">Title: </label>
-        <input type="text" id="title" name="title">
-        <br>
-        <label for="location">Location: </label>
-        <input type="text" id="location" name="location">
-        <br>
-        <label for="description">Description: </label>
-        <input type="text" id="description" name="description">
-        <br>
-        <label for="price">Price: </label>
-        <input type="text" id="price" name="price">
-        <br>
-        <Button>ADD NEW CAMP</Button>
-    </form>
+    <h1 class="text-center">Add a new camp!</h1>
+    <div class="col-6 offset-3">
+        <form action="/camp/add" id="newcamp" method="POST">
+            <div class="mb-3">
+                <label class="form-label" for="title">Title: </label>
+                <input class="form-control" type="text" id="title" name="title">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="location">Location: </label>
+                <input class="form-control" type="text" id="location" name="location">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="description">Description: </label>
+                <input class="form-control" type="text" id="description" name="description">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="price">Price: </label>
+                <input class="form-control" type="text" id="price" name="price">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="image">Image url: </label>
+                <input class="form-control" type="text" id="image" name="image">
+            </div>
+            <Button class="btn btn-success">ADD NEW CAMP</Button>
+        </form>
+    </div>
