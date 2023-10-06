@@ -14,6 +14,7 @@
     - Add new camp
     - Delete camp
     - Update price of existing camp
+    - Some basic styling
 
 
 ### Things to be implemented
