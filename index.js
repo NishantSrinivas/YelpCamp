@@ -100,9 +100,9 @@ app.patch("/camp/:id", async (req, res, next) => {
     }
 });
 
-app.patch("/camp/updateprice/:id", async (req, res, next) => {
+app.patch("/camp/update/:id", async (req, res, next) => {
     try {
-        await Camp.findByIdAndUpdate(req.params.id, { "price": req.body.price, "image": req.body.image });
+        await Camp.findByIdAndUpdate(req.params.id, { "title": req.body.title, "location": req.body.location, "description": req.body.description, "price": req.body.price, "image": req.body.image });
     } catch {
         return next(new errorHandle(500, "Camp could not be updated"));
     }
