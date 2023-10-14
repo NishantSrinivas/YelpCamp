@@ -5,7 +5,10 @@ const Camp = require("./models/camps");
 const methodOverride = require('method-override');
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
-const errorHandle = require("./ErrorHandle");
+const errorHandle = require("./error_utils/ErrorHandle");
+const handleAsync = require("./error_utils/HandleAsync");
+const validCamp = require("./error_utils/JoiValidation");
+const ErrorHandle = require("./error_utils/ErrorHandle");
 
 mongoose.connect('mongodb://127.0.0.1:27017/yelpcamp');
 
@@ -22,6 +25,15 @@ app.use(methodOverride("_method"));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+const validateCamp = (req, res, next) => {
+    const { error } = validCamp.validate(req.body);
+    if (error) {
+        const msg = error.details.map(e => e.message).join(",");
+        throw new ErrorHandle(400, msg);
+    }
+    return next();
+}
+
 app.get("/", (req, res) => {
     res.render("home");
 });
@@ -30,18 +42,10 @@ app.get("/camp/newcamp", (req, res) => {
     res.render("new");
 });
 
-app.get("/camp/:id", async (req, res, next) => {
-    try {
-        const camp_with_id = await Camp.findById(req.params.id);
-        if (!camp_with_id) {
-            return next(new errorHandle(404, "Camp does not exist!"));
-        }
-        res.render("camp", { camp_with_id });
-    }
-    catch {
-        return next(new errorHandle(500, "What are you trying to do man?!?!"));
-    }
-});
+app.get("/camp/:id", handleAsync(async (req, res, next) => {
+    const camp_with_id = await Camp.findById(req.params.id);
+    res.render("camp", { camp_with_id });
+}));
 
 app.get("/allcamps", async (req, res, next) => {
     try {
@@ -52,7 +56,7 @@ app.get("/allcamps", async (req, res, next) => {
     }
 });
 
-app.post("/camp/add", async (req, res, next) => {
+app.post("/camp/add", validateCamp, handleAsync(async (req, res, next) => {
     const camp = Camp({
         "price": req.body.price,
         "title": req.body.title,
@@ -60,54 +64,29 @@ app.post("/camp/add", async (req, res, next) => {
         "description": req.body.description,
         "image": req.body.image
     });
-
-    try {
-        await camp.save();
-    } catch {
-        return next(new errorHandle(500, "Camp could not be saved"));
-    }
+    await camp.save();
     res.redirect("/allcamps");
-});
+}));
 
-app.delete("/camp/:id", async (req, res, next) => {
-    try {
-        await Camp.findByIdAndDelete(req.params.id);
-        res.redirect("/allcamps");
-    } catch {
-        return next(new errorHandle(500, "Camp could not be deleted"));
-    }
-});
+app.delete("/camp/:id", handleAsync(async (req, res, next) => {
+    await Camp.findByIdAndDelete(req.params.id);
+    res.redirect("/allcamps");
+}));
 
-app.delete("/allcamps", async (req, res, next) => {
-    try {
-        await Camp.deleteMany({});
-    } catch {
-        return next(new errorHandle(500, "Could not delete all camps"));
-    }
+app.delete("/allcamps", handleAsync(async (req, res, next) => {
+    await Camp.deleteMany({});
     res.redirect("/");
-});
+}));
 
-app.patch("/camp/:id", async (req, res, next) => {
-    try {
-        const camp_with_id = await Camp.findById(req.params.id);
-        if (!camp_with_id) {
-            return next(new errorHandle(404, "Camp does not exist!"));
-        }
-        res.render("edit", { camp_with_id });
-    }
-    catch {
-        return next(new errorHandle(500, "What are you trying to do man?!?!"));
-    }
-});
+app.patch("/camp/:id", handleAsync(async (req, res, next) => {
+    const camp_with_id = await Camp.findById(req.params.id);
+    res.render("edit", { camp_with_id });
+}));
 
-app.patch("/camp/update/:id", async (req, res, next) => {
-    try {
-        await Camp.findByIdAndUpdate(req.params.id, { "title": req.body.title, "location": req.body.location, "description": req.body.description, "price": req.body.price, "image": req.body.image });
-    } catch {
-        return next(new errorHandle(500, "Camp could not be updated"));
-    }
+app.patch("/camp/update/:id", validateCamp, handleAsync(async (req, res, next) => {
+    await Camp.findByIdAndUpdate(req.params.id, { "title": req.body.title, "location": req.body.location, "description": req.body.description, "price": req.body.price, "image": req.body.image });
     res.redirect("/allcamps");
-});
+}));
 
 app.use((req, res) => {
     res.status(404).render("notfound");

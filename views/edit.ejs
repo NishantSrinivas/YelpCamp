@@ -7,27 +7,27 @@
                 novalidate class="validate-form"> <!-- To prevent browser valication and let bootstrap do its thing.-->
                 <div class="mb-3">
                     <label class="form-label" for="title">Title: </label>
-                    <input class="form-control" type="text" id="title" name="title" value=<%= camp_with_id.title %>
+                    <input class="form-control" type="text" id="title" name="title" value=<%=camp_with_id.title %>
                     required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="location">Location: </label>
-                    <input class="form-control" type="text" id="location" name="location" value=<%= camp_with_id.location
+                    <input class="form-control" type="text" id="location" name="location" value=<%=camp_with_id.location
                         %> required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="description">Description: </label>
                     <input class="form-control" type="text" id="description" name="description"
-                        value=<%= camp_with_id.description %> required>
+                        value=<%=camp_with_id.description %> required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="price">Price: </label>
-                    <input class="form-control" type="number" id="price" name="price" value=<%= camp_with_id.price %>
+                    <input class="form-control" type="number" id="price" name="price" value=<%=camp_with_id.price %>
                     required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="image">Image url: </label>
-                    <input class="form-control" type="text" id="image" name="image" value=<%= camp_with_id.image %>
+                    <input class="form-control" type="text" id="image" name="image" value=<%=camp_with_id.image %>
                     required>
                 </div>
                 <Button class="btn btn-warning">Update</Button>
